@@ -26,14 +26,33 @@ function FuncComp(props) {
  
   // side effect
   useEffect(function() {
-    console.log('%cFunc useEffect (componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle); 
-    document.title = number + ' : ' + date;
+    console.log('%cFunc useEffect number (componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle); 
+    document.title = number;
 
     //clean up(정리정돈: 초기화 후 정리)
     return function() {
-      console.log('%cFunc useEffect return (componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle); 
+      console.log('%cFunc useEffect number return (componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle); 
     }
-  }) // useEffect는 중복 사용이 가능함
+  }, [number]) // useEffect는 중복 사용이 가능함
+
+  useEffect(function() {
+    console.log('%cFunc useEffect date (componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle); 
+    document.title = date;
+
+    return function() {
+      console.log('%cFunc useEffect date return (componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle); 
+    }
+  }, [date]) 
+
+  // 1회만 실행(mount)
+  useEffect(function() {
+    console.log('%cFunc useEffect (componentDidMount)-only once ' + (++funcId), funcStyle); 
+    document.title = date;
+
+    return function() {
+      console.log('%cFunc useEffect return (componentDidMount)-only once ' + (++funcId), funcStyle); 
+    }
+  }, []) 
 
   console.log('%cFunc => render ' + (++funcId), funcStyle); 
 
