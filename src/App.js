@@ -24,16 +24,16 @@ function FuncComp(props) {
   // var setDate = dateState[1];
   var [date, setDate] = useState((new Date()).toString()); // useState 축약형
  
-  // side effect 
+  // side effect
   useEffect(function() {
-    console.log('%cFunc useEffect (componentDidMount & componentDidUpdate) A' + (++funcId), funcStyle); 
+    console.log('%cFunc useEffect (componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle); 
     document.title = number + ' : ' + date;
-  })
 
-  useEffect(function() { // useEffect는 중복 사용이 가능함
-    console.log('%cFunc useEffect (componentDidMount & componentDidUpdate) B' + (++funcId), funcStyle); 
-    document.title = number + ' : ' + date;
-  })
+    //clean up(정리정돈: 초기화 후 정리)
+    return function() {
+      console.log('%cFunc useEffect return (componentDidMount & componentDidUpdate) ' + (++funcId), funcStyle); 
+    }
+  }) // useEffect는 중복 사용이 가능함
 
   console.log('%cFunc => render ' + (++funcId), funcStyle); 
 
@@ -55,6 +55,8 @@ function FuncComp(props) {
     </div>
   );
 }
+
+
 
 var classStyle = 'color: red';
 class ClassComp extends React.Component {
