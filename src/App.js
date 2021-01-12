@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 
 function App() {
@@ -12,6 +12,8 @@ function App() {
 }
 
 
+var funcStyle = 'color: green';
+var funcId = 0;
 function FuncComp(props) {
   var numberState = useState(props.initNumber); // Hook을 이용하여 function style code에서도 state 사용이 가능해짐
   var number = numberState[0]; // 상태 값
@@ -21,6 +23,19 @@ function FuncComp(props) {
   // var date = dateState[0];
   // var setDate = dateState[1];
   var [date, setDate] = useState((new Date()).toString()); // useState 축약형
+ 
+  // side effect 
+  useEffect(function() {
+    console.log('%cFunc useEffect (componentDidMount & componentDidUpdate) A' + (++funcId), funcStyle); 
+    document.title = number + ' : ' + date;
+  })
+
+  useEffect(function() { // useEffect는 중복 사용이 가능함
+    console.log('%cFunc useEffect (componentDidMount & componentDidUpdate) B' + (++funcId), funcStyle); 
+    document.title = number + ' : ' + date;
+  })
+
+  console.log('%cFunc => render ' + (++funcId), funcStyle); 
 
   return (
     <div className="container">
